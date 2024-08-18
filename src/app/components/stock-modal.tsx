@@ -58,11 +58,11 @@ export const StockModal = ({ symbol, children }: Props) => {
         >
           <DialogHeader>
             <DialogTitle className="flex justify-between text-2xl">
-              <span>
+              <div>
                 {symbol}
                 <span className="mx-2">-</span>
                 {stockSymbolsMap[symbol]}
-              </span>
+              </div>
               <div className="mr-5">
                 <button
                   className="rounded-full border border-slate-500 p-1 text-slate-800 transition-all hover:border-slate-800 hover:bg-slate-800 hover:text-slate-50"

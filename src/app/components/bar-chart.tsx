@@ -115,7 +115,7 @@ const _BarChart = ({ data, legend }: ChartData) => {
   return (
     <>
       <div className={`flex h-full flex-col gap-2 overflow-auto`}>
-        <div className="flex justify-start gap-3 overflow-x-auto md:justify-center">
+        <div className="flex justify-start gap-3 overflow-x-auto p-1 md:justify-center">
           {Object.entries(filteredLegend).map(([key, { color }]) => (
             <div
               key={key}
@@ -148,13 +148,15 @@ const _BarChart = ({ data, legend }: ChartData) => {
                     );
                   })}
                 </div>
-                <div className="mb-2 h-[1px] w-[150%] bg-slate-800" />
+                <div className="mb-2 mt-[0.5px] h-[1px] w-[calc(100%+2.5rem)] bg-slate-800" />
                 <p className="text-nowrap text-xs">{item.columnLabel.label}</p>
               </div>
             ))}
           </div>
         </div>
-        <div className="flex justify-center text-sm text-slate-700">Date</div>
+        <div className="flex justify-center text-sm font-bold text-slate-700">
+          Date
+        </div>
       </div>
       <div
         className="fixed transform-gpu rounded-xl bg-slate-800 px-4 text-slate-50 transition-transform"
