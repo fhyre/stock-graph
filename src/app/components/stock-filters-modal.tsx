@@ -108,7 +108,7 @@ export const StockFiltersModal = ({
   return (
     <Dialog open={opened} onOpenChange={onClose}>
       <DialogContent
-        className="flex h-1/2 max-h-[800px] w-3/4 max-w-[1200px] flex-col gap-6"
+        className="flex h-1/2 max-h-[800px] w-3/4 max-w-[1200px] flex-col"
         overlayStyles="bg-white bg-opacity-[0.1] backdrop-blur-[0.5px]"
         onClick={(e) => e.stopPropagation()}
       >
@@ -117,7 +117,7 @@ export const StockFiltersModal = ({
             <span>Filters</span>
           </DialogTitle>
         </DialogHeader>
-        <div className="flex h-full flex-col justify-between">
+        <div className="flex h-full flex-col justify-between gap-2 overflow-auto">
           <div className="flex flex-col gap-10 overflow-auto">
             {Object.entries(displayedFilters).map(([key, filtersObj], i) => {
               const filterLabelKey = key as keyof DisplayedFilters;
@@ -167,12 +167,17 @@ export const StockFiltersModal = ({
           </div>
           <div className="flex items-center justify-end gap-4">
             <Button
-              className="bg-slate-100 text-slate-800 hover:bg-slate-200"
+              className="h-8 bg-slate-100 text-slate-800 hover:bg-slate-200 md:h-10"
               onClick={handleResetFilters}
             >
               Reset
             </Button>
-            <Button onClick={handleSaveFilters}>Save</Button>
+            <Button
+              onClick={handleSaveFilters}
+              className="h-8 hover:bg-blue-500 hover:text-slate-50 md:h-10"
+            >
+              Save
+            </Button>
           </div>
         </div>
       </DialogContent>
