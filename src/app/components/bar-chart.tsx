@@ -184,8 +184,12 @@ const _BarChart = ({ data, legend }: ChartData) => {
             </div>
           </div>
         </div>
-        <div className="flex justify-center text-sm font-bold text-slate-700">
+        <div className="relative flex justify-center text-sm font-bold text-slate-700">
           Date
+          <p className="absolute right-0 font-normal text-slate-500">
+            <span className="invisible mr-1 sm:visible">Displaying</span>
+            {filteredData.length} points
+          </p>
         </div>
       </div>
       <div
