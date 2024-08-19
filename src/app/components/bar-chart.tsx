@@ -7,6 +7,7 @@ import {
   StockStrings,
 } from "../static/stock-types";
 import { useSearchParams } from "next/navigation";
+import { useVirtualizer } from "@tanstack/react-virtual";
 
 const _BarChart = ({ data, legend }: ChartData) => {
   const [hiddenColumns, setHiddenColumns] = useState<{
@@ -65,6 +66,13 @@ const _BarChart = ({ data, legend }: ChartData) => {
   const barContainerRef = useRef<HTMLDivElement>(null);
   const floatingInfoRef = useRef<HTMLDivElement>(null);
 
+  const virtualizer = useVirtualizer({
+    horizontal: true,
+    getScrollElement: () => barContainerRef.current,
+    count: filteredData.length,
+    estimateSize: () => 300,
+  });
+
   const resetFloatingInfo = () => {
     const floatingInfo = floatingInfoRef.current;
     if (floatingInfo) {
@@ -114,7 +122,7 @@ const _BarChart = ({ data, legend }: ChartData) => {
 
   return (
     <>
-      <div className={`flex h-full flex-col gap-2 overflow-auto`}>
+      <div className={`flex h-full flex-col justify-stretch gap-2`}>
         <div className="flex justify-start gap-3 overflow-x-auto p-1 md:justify-center">
           {Object.entries(filteredLegend).map(([key, { color }]) => (
             <div
@@ -127,31 +135,53 @@ const _BarChart = ({ data, legend }: ChartData) => {
           ))}
         </div>
         <div className="flex h-full">
-          <div className="flex gap-10 overflow-auto" ref={barContainerRef}>
-            {filteredData.map((item, idx1) => (
-              <div className="flex flex-col items-center" key={`${idx1}-bars`}>
-                <div className="flex h-full items-end gap-1 overflow-hidden">
-                  {item.columns.map((col, idx2) => {
-                    return (
-                      <button
-                        key={`${idx2}-bar`}
-                        className={`w-[30px] ${legend[col.label].color} transform-gpu transition-all ${hiddenColumns[idx1]?.includes(col.key) ? "invisible scale-0 duration-300 hover:scale-0" : "hover:scale-125"}`}
-                        style={{
-                          height: `${(col.value / max) * 100}%`,
-                        }}
-                        onClick={() => handleColumnClick(idx1, col.key)}
-                        onMouseMove={(e) =>
-                          handleOnColumnHover(col.value.toString(), e)
-                        }
-                        onMouseLeave={handleOnColumnLeave}
-                      />
-                    );
-                  })}
-                </div>
-                <div className="mb-2 mt-[0.5px] h-[1px] w-[calc(100%+2.5rem)] bg-slate-800" />
-                <p className="text-nowrap text-xs">{item.columnLabel.label}</p>
-              </div>
-            ))}
+          <div className="overflow-x-scroll" ref={barContainerRef}>
+            <div
+              className={`relative h-full`}
+              style={{
+                width: `${virtualizer.getTotalSize()}px`,
+              }}
+            >
+              {virtualizer.getVirtualItems().map(({ index, size, start }) => {
+                const idx1 = index;
+                const item = filteredData[idx1];
+                return (
+                  <div
+                    className="absolute left-0 top-0 h-full"
+                    style={{
+                      width: `${size}px`,
+                      transform: `translateX(${start}px)`,
+                    }}
+                    key={`${idx1}-bars`}
+                  >
+                    <div className="flex h-full flex-col items-center">
+                      <div className="flex h-full items-end gap-1 overflow-hidden">
+                        {item.columns.map((col, idx2) => {
+                          return (
+                            <button
+                              key={`${idx2}-bar`}
+                              className={`w-[30px] ${legend[col.label].color} transform-gpu transition-all ${hiddenColumns[idx1]?.includes(col.key) ? "invisible scale-0 duration-300 hover:scale-0" : "hover:scale-125"}`}
+                              style={{
+                                height: `${(col.value / max) * 100}%`,
+                              }}
+                              onClick={() => handleColumnClick(idx1, col.key)}
+                              onMouseMove={(e) =>
+                                handleOnColumnHover(col.value.toString(), e)
+                              }
+                              onMouseLeave={handleOnColumnLeave}
+                            />
+                          );
+                        })}
+                      </div>
+                      <div className="mb-2 mt-[0.5px] h-[1px] w-full bg-slate-800/50" />
+                      <p className="text-nowrap text-xs">
+                        {item.columnLabel.label}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="flex justify-center text-sm font-bold text-slate-700">
