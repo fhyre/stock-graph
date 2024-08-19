@@ -160,6 +160,7 @@ const _BarChart = ({ data, legend }: ChartData) => {
                           const hidden = hiddenColumns[idx1]?.includes(col.key);
                           return (
                             <div
+                              key={`${idx2}-bar`}
                               className={`flex h-full transition-all hover:bg-gray-200/60 ${hidden && "invisible"} `}
                               onMouseMove={(e) =>
                                 handleOnColumnHover(col.value.toString(), e)
@@ -167,7 +168,6 @@ const _BarChart = ({ data, legend }: ChartData) => {
                               onMouseLeave={handleOnColumnLeave}
                             >
                               <button
-                                key={`${idx2}-bar`}
                                 className={`w-[30px] self-end ${legend[col.label].color} origin-center transform-gpu transition-all ${hidden ? "invisible scale-0 duration-300 hover:scale-0" : "hover:z-[1] hover:scale-150 hover:brightness-50"}`}
                                 style={{
                                   height: `${(Math.log(col.value) / Math.log(max)) * 100}%`,
