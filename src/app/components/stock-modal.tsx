@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { stockSymbolsMap } from "../static/stock-symbol";
 import { SlidersHorizontal } from "lucide-react";
 import { StockFiltersModal } from "./stock-filters-modal";
@@ -27,13 +27,8 @@ export const StockModal = ({ symbol, children }: Props) => {
     {} as Record<string, string>,
   );
 
-  const [queryParamsString, setQueryParamsString] = useState("");
   const [modalOpened, setModalOpened] = useState(true);
   const [optionsModalOpened, setOptionsModalOpened] = useState(false);
-
-  // useEffect(() => {
-  //   router.prefetch(queryParamsString);
-  // }, [router, queryParamsString]);
 
   const handleOpenChange = () => {
     setModalOpened(!modalOpened);
@@ -52,7 +47,6 @@ export const StockModal = ({ symbol, children }: Props) => {
     });
     const queryString = new URLSearchParams(queryParamsParsed).toString();
     const pathQueryString = `${pathname}?${queryString}`;
-    setQueryParamsString(pathQueryString);
     window.history.pushState(null, "", pathQueryString);
   };
 
