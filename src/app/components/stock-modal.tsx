@@ -27,12 +27,13 @@ export const StockModal = ({ symbol, children }: Props) => {
     {} as Record<string, string>,
   );
 
+  const [queryParamsString, setQueryParamsString] = useState("");
   const [modalOpened, setModalOpened] = useState(true);
   const [optionsModalOpened, setOptionsModalOpened] = useState(false);
 
   useEffect(() => {
-    router.prefetch("/");
-  }, [router]);
+    router.prefetch(queryParamsString);
+  }, [router, queryParamsString]);
 
   const handleOpenChange = () => {
     setModalOpened(!modalOpened);
@@ -50,7 +51,9 @@ export const StockModal = ({ symbol, children }: Props) => {
       queryParamsParsed[key] = value.join(",");
     });
     const queryString = new URLSearchParams(queryParamsParsed).toString();
-    router.push(`${pathname}?${queryString}`);
+    const pathQueryString = `${pathname}?${queryString}`;
+    setQueryParamsString(pathQueryString);
+    router.push(pathQueryString);
   };
 
   return (
