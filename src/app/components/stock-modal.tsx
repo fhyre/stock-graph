@@ -31,9 +31,9 @@ export const StockModal = ({ symbol, children }: Props) => {
   const [modalOpened, setModalOpened] = useState(true);
   const [optionsModalOpened, setOptionsModalOpened] = useState(false);
 
-  useEffect(() => {
-    router.prefetch(queryParamsString);
-  }, [router, queryParamsString]);
+  // useEffect(() => {
+  //   router.prefetch(queryParamsString);
+  // }, [router, queryParamsString]);
 
   const handleOpenChange = () => {
     setModalOpened(!modalOpened);
@@ -53,7 +53,7 @@ export const StockModal = ({ symbol, children }: Props) => {
     const queryString = new URLSearchParams(queryParamsParsed).toString();
     const pathQueryString = `${pathname}?${queryString}`;
     setQueryParamsString(pathQueryString);
-    router.push(pathQueryString);
+    window.history.pushState(null, "", pathQueryString);
   };
 
   return (
