@@ -15,7 +15,7 @@ export default async function Page({ searchParams }: Props) {
   return (
     <>
       <div className={`flex h-screen w-screen items-center justify-center`}>
-        <main className="m-4 flex min-w-[300px] max-w-[600px] flex-col gap-5 rounded-xl border border-slate-300 bg-slate-100 p-4">
+        <main className="m-4 flex min-w-[300px] max-w-[600px] flex-col gap-5 rounded-xl border border-slate-300 bg-white p-4 shadow-lg">
           <h1 className="text-2xl font-semibold">Stocks</h1>
           <StockBadgeListLayout>
             {...Object.keys(StockSymbol).map((symbol) => {
