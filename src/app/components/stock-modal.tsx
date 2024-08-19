@@ -7,7 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { stockSymbolsMap } from "../static/stock-symbol";
 import { SlidersHorizontal } from "lucide-react";
 import { StockFiltersModal } from "./stock-filters-modal";
@@ -29,6 +29,10 @@ export const StockModal = ({ symbol, children }: Props) => {
 
   const [modalOpened, setModalOpened] = useState(true);
   const [optionsModalOpened, setOptionsModalOpened] = useState(false);
+
+  useEffect(() => {
+    router.prefetch("/");
+  }, [router]);
 
   const handleOpenChange = () => {
     setModalOpened(!modalOpened);
