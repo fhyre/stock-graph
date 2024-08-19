@@ -205,6 +205,4 @@ const _BarChart = ({ data, legend }: ChartData) => {
   );
 };
 
-export const BarChart = memo(_BarChart, (prevProps, nextProps) => {
-  return JSON.stringify(prevProps) === JSON.stringify(nextProps);
-});
+export const BarChart = memo(_BarChart);
