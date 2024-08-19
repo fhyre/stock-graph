@@ -101,14 +101,14 @@ const _BarChart = ({ data, legend }: ChartData) => {
 
   const handleOnColumnHover = (
     content: string,
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>,
   ) => {
     const barContainer = barContainerRef.current;
     const floatingInfo = floatingInfoRef.current;
 
     if (barContainer && floatingInfo) {
       const { top, left } = barContainer.getBoundingClientRect();
-      floatingInfo.style.top = `${e.clientY - top}px`;
+      floatingInfo.style.top = `${e.clientY - top * 0.8}px`;
       floatingInfo.style.left = `${e.clientX - left}px`;
       floatingInfo.style.visibility = "visible";
       floatingInfo.style.transform = "scale(1)";
@@ -157,19 +157,24 @@ const _BarChart = ({ data, legend }: ChartData) => {
                     <div className="flex h-full flex-col items-center">
                       <div className="flex h-full items-end gap-1 overflow-hidden">
                         {item.columns.map((col, idx2) => {
+                          const hidden = hiddenColumns[idx1]?.includes(col.key);
                           return (
-                            <button
-                              key={`${idx2}-bar`}
-                              className={`w-[30px] ${legend[col.label].color} transform-gpu transition-all ${hiddenColumns[idx1]?.includes(col.key) ? "invisible scale-0 duration-300 hover:scale-0" : "hover:z-[1] hover:scale-150 hover:brightness-75"}`}
-                              style={{
-                                height: `${(col.value / max) * 100}%`,
-                              }}
-                              onClick={() => handleColumnClick(idx1, col.key)}
+                            <div
+                              className={`flex h-full transition-all hover:bg-gray-200/60 ${hidden && "invisible"} `}
                               onMouseMove={(e) =>
                                 handleOnColumnHover(col.value.toString(), e)
                               }
                               onMouseLeave={handleOnColumnLeave}
-                            />
+                            >
+                              <button
+                                key={`${idx2}-bar`}
+                                className={`w-[30px] self-end ${legend[col.label].color} origin-center transform-gpu transition-all ${hidden ? "invisible scale-0 duration-300 hover:scale-0" : "hover:z-[1] hover:scale-150 hover:brightness-50"}`}
+                                style={{
+                                  height: `${(Math.log(col.value) / Math.log(max)) * 100}%`,
+                                }}
+                                onClick={() => handleColumnClick(idx1, col.key)}
+                              />
+                            </div>
                           );
                         })}
                       </div>
