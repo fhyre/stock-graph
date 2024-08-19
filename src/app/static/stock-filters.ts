@@ -20,6 +20,8 @@ export const limitFilters: { [limitKey: string]: string } = {
   500: "500",
   1000: "1000",
   5000: "5000",
+  7500: "7500",
+  10000: "10000",
 };
 
 export const displayedFilters = {

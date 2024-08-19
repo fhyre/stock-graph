@@ -1,7 +1,7 @@
 export const getStock = async (symbol: string) => {
   try {
     const res = await fetch(
-      `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/minute/2000-01-01/2024-01-01?adjusted=true&sort=asc&apiKey=${process.env.POLYGON_API_KEY}`,
+      `https://api.polygon.io/v2/aggs/ticker/${symbol}/range/1/minute/2000-01-01/2024-01-01?adjusted=true&sort=asc&limit=10000&apiKey=${process.env.POLYGON_API_KEY}`,
       { cache: "force-cache" },
     );
 
