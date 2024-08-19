@@ -64,7 +64,9 @@ export const StockChart = async ({ symbol }: Props) => {
   } catch (error) {
     return (
       <div className="flex h-full w-full items-center justify-center">
-        <GenericError />
+        <GenericError
+          message={error instanceof Error ? error.message : undefined}
+        />
       </div>
     );
   }

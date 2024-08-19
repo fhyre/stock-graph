@@ -1,10 +1,14 @@
 import { Ban } from "lucide-react";
 
-export const GenericError = () => {
+type Props = {
+  message?: string;
+};
+
+export const GenericError = ({ message }: Props) => {
   return (
     <div className="flex gap-2 text-red-500">
       <Ban width={20} />
-      An error has occurred
+      {message ? <p>{message}</p> : <p>An error has occurred</p>}
     </div>
   );
 };
