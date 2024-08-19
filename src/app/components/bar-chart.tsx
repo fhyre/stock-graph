@@ -147,7 +147,7 @@ const _BarChart = ({ data, legend }: ChartData) => {
                 const item = filteredData[idx1];
                 return (
                   <div
-                    className="absolute left-0 top-0 h-full"
+                    className="absolute left-0 top-0 h-full transform-gpu"
                     style={{
                       width: `${size}px`,
                       transform: `translateX(${start}px)`,
@@ -160,7 +160,7 @@ const _BarChart = ({ data, legend }: ChartData) => {
                           return (
                             <button
                               key={`${idx2}-bar`}
-                              className={`w-[30px] ${legend[col.label].color} transform-gpu transition-all ${hiddenColumns[idx1]?.includes(col.key) ? "invisible scale-0 duration-300 hover:scale-0" : "hover:z-[1] hover:scale-150 hover:brightness-50"}`}
+                              className={`w-[30px] ${legend[col.label].color} transform-gpu transition-all ${hiddenColumns[idx1]?.includes(col.key) ? "invisible scale-0 duration-300 hover:scale-0" : "hover:z-[1] hover:scale-150 hover:brightness-75"}`}
                               style={{
                                 height: `${(col.value / max) * 100}%`,
                               }}
