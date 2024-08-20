@@ -109,7 +109,7 @@ export const StockFiltersModal = ({
     <Dialog open={opened} onOpenChange={onClose}>
       <DialogContent
         className="flex h-3/4 max-h-[800px] w-3/4 max-w-[1200px] flex-col"
-        overlayStyles="bg-white bg-opacity-[0.1] backdrop-blur-[1px]"
+        overlayStyles="bg-white bg-opacity-[0.1] backdrop-blur-[0.25px]"
         onClick={(e) => e.stopPropagation()}
       >
         <DialogHeader>

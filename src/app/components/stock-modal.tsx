@@ -54,7 +54,7 @@ export const StockModal = ({ symbol, children }: Props) => {
     <>
       <Dialog open={modalOpened} onOpenChange={handleOpenChange}>
         <DialogContent
-          className={`flex h-3/4 max-h-[800px] w-3/4 max-w-[1200px] transform-gpu flex-col transition-all duration-300 ${optionsModalOpened && "translate-y-[-58%] scale-[0.95]"}`}
+          className={`flex h-3/4 max-h-[800px] w-3/4 max-w-[1200px] transform-gpu flex-col transition-all duration-300 ${optionsModalOpened && "translate-y-[-57%] scale-[0.95]"}`}
           overlayStyles="bg-slate-50/50 backdrop-blur-sm"
         >
           <DialogHeader>
@@ -77,13 +77,11 @@ export const StockModal = ({ symbol, children }: Props) => {
           {children}
         </DialogContent>
       </Dialog>
-      {optionsModalOpened && (
-        <StockFiltersModal
-          opened={optionsModalOpened}
-          onClose={handleToggleOptionsModal}
-          onSaveFilters={handleSaveFilters}
-        />
-      )}
+      <StockFiltersModal
+        opened={optionsModalOpened}
+        onClose={handleToggleOptionsModal}
+        onSaveFilters={handleSaveFilters}
+      />
     </>
   );
 };
